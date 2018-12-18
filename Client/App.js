@@ -14,25 +14,52 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
+
 type Props = {};
 export default class App extends Component<Props> {
-  state = {
-    persons: '',
-    phone: '',
-    isDateTimePickerVisible: false,
-    date: "2016-05-15"
+  constructor() {
+    super();
+    this.state = {
+      persons: '',
+      persons2: '',
+      phone: '',
+      isDateTimePickerVisible: false,
+      date: "2016-05-15",
+      floridaLossFree: '',
+      georgiaLossFree: '',
+      floridalimits: '',
+      floridalimitsnames: '',
+      georgialimits: '',
+      floridacounty: '',
+      georgiacounty: '',
+      floridaspecialty: '',
+      floridaspecialtynames: ''
+    }
   };
+
+
 
   getRequest() {
     //AsyncStorage.getItem('username').then((value) => 
     //  this.setState({persons: value}));
     axios.get('http://localhost:3000/send')
-    .then(res => {this.setState({persons: res.data})})
+    .then(res => {this.setState({
+      floridaLossFree: res.data.first
+      //floridaLossFree: res.data.floridaLossFree, 
+      /*georgiaLossFree: res.data.georgiaLossFree,
+      floridalimits: res.data.floridalimits,
+      floridalimitsnames: res.data.floridalimitsnames,
+      georgialimits: res.data.georgialimits,
+      floridacounty: res.data.floridacounty,
+      georgiacounty: res.data.georgiacounty,
+      floridaspecialty: res.data.floridaspecialty,
+      floridaspecialtynames: res.data.floridaspecialtynames*/
+    })})
     .catch(error => console.log(error))
   }
 
   resetValue() {
-    this.setState({persons: ''});
+    this.setState({persons: '', persons2: ''});
   }
 
   componentDidMount = () => {
@@ -57,7 +84,13 @@ export default class App extends Component<Props> {
   }
 
   mapFlorida() {
-    return Object.keys(this.state.persons).map((p, i) => <Text key={i}>{p}: {this.state.persons[p]}</Text> );
+    //AsyncStorage.setItem('thisArray', this.state.persons);
+    //this.setState({persons: AsyncStorage.getItem('thisArray')});
+    //console.log(global.persons);
+    return Object.keys(this.state.floridaLossFree).map((p, i) => <Text key={i}>{p}: {this.state.floridaLossFree[p]}</Text> );
+  }
+  mapFlorida2() {
+    //return Object.keys(this.state.persons2).map((p, i) => <Text key={i}>{p}: {this.state.persons2[p]}</Text> );
   }
 
   render() {
@@ -81,13 +114,14 @@ export default class App extends Component<Props> {
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
           />
-          {this.mapFlorida()}
           <Button
             onPress={this.resetValue.bind(this)}
             title="Reset"
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
           />
+          {this.mapFlorida()}
+          
         </ScrollView>
       </View>
     );
