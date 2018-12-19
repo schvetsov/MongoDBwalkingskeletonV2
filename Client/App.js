@@ -25,9 +25,11 @@ export default class App extends Component<Props> {
       phone: '',
       isDateTimePickerVisible: false,
       date: "2016-05-15",
-      floridaLossFree: '',
+      floridaLossFree: [],
       georgiaLossFree: '',
-      floridalimits: '',
+      floridalimits: {
+
+      },
       floridalimitsnames: '',
       georgialimits: '',
       floridacounty: '',
@@ -40,29 +42,44 @@ export default class App extends Component<Props> {
 
 
   getRequest() {
+    console.log(this.state.floridalimits.Hund[1])
     //AsyncStorage.getItem('username').then((value) => 
     //  this.setState({persons: value}));
+    // axios.get('http://localhost:3000/send')
+    // .then(res => 
+    //   {this.setState({
+    //   floridaLossFree: res.data.floridaLossFree, 
+    //   georgiaLossFree: res.data.georgiaLossFree,
+    //   floridalimits: res.data.floridalimits,
+    //   floridalimitsnames: res.data.floridalimitsnames,
+    //   georgialimits: res.data.georgialimits,
+    //   floridacounty: res.data.floridacounty,
+    //   georgiacounty: res.data.georgiacounty,
+    //   floridaspecialty: res.data.floridaspecialty,
+    //   floridaspecialtynames: res.data.floridaspecialtynames
+    // })})
+    // .catch(error => console.log(error))
+  }
+
+  resetValue() {
+    this.setState({floridaLossFree: '', georgiaLossFree: ''});
+  }
+
+  componentDidMount = () => {
     axios.get('http://localhost:3000/send')
-    .then(res => {this.setState({
-      floridaLossFree: res.data.first
-      //floridaLossFree: res.data.floridaLossFree, 
-      /*georgiaLossFree: res.data.georgiaLossFree,
+    .then(res => 
+      {this.setState({
+      floridaLossFree: res.data.floridaLossFree, 
+      georgiaLossFree: res.data.georgiaLossFree,
       floridalimits: res.data.floridalimits,
       floridalimitsnames: res.data.floridalimitsnames,
       georgialimits: res.data.georgialimits,
       floridacounty: res.data.floridacounty,
       georgiacounty: res.data.georgiacounty,
       floridaspecialty: res.data.floridaspecialty,
-      floridaspecialtynames: res.data.floridaspecialtynames*/
+      floridaspecialtynames: res.data.floridaspecialtynames
     })})
     .catch(error => console.log(error))
-  }
-
-  resetValue() {
-    this.setState({persons: '', persons2: ''});
-  }
-
-  componentDidMount = () => {
 /*
     axios.get('/send')
       .then(res => {
@@ -83,14 +100,82 @@ export default class App extends Component<Props> {
       //app.get('/', (req, res) => res.send('Hello World from Heroku!'))
   }
 
-  mapFlorida() {
-    //AsyncStorage.setItem('thisArray', this.state.persons);
-    //this.setState({persons: AsyncStorage.getItem('thisArray')});
-    //console.log(global.persons);
+  map1() {
     return Object.keys(this.state.floridaLossFree).map((p, i) => <Text key={i}>{p}: {this.state.floridaLossFree[p]}</Text> );
   }
-  mapFlorida2() {
-    //return Object.keys(this.state.persons2).map((p, i) => <Text key={i}>{p}: {this.state.persons2[p]}</Text> );
+  map2() {
+    return Object.keys(this.state.georgiaLossFree).map((p, i) => <Text key={i}>{p}: {this.state.georgiaLossFree[p]}</Text> );
+  }
+  map3() {
+    return Object.keys(this.state.floridalimits).map((p, i) => <Text key={i}>{p}: {this.state.floridalimits[p]}</Text> );
+  }
+  map4() {
+    return Object.keys(this.state.floridalimitsnames).map((p, i) => <Text key={i}>{p}: {this.state.floridalimitsnames[p]}</Text> );
+  }
+  map5() {
+    return Object.keys(this.state.georgialimits).map((p, i) => <Text key={i}>{p}: {this.state.georgialimits[p]}</Text> );
+  }
+  map6() {
+    return Object.keys(this.state.floridacounty).map((p, i) => <Text key={i}>{p}: {this.state.floridacounty[p]}</Text> );
+  }
+  map7() {
+    return Object.keys(this.state.georgiacounty).map((p, i) => <Text key={i}>{p}: {this.state.georgiacounty[p]}</Text> );
+  }
+  map8() {
+    return Object.keys(this.state.floridaspecialty).map((p, i) => <Text key={i}>{p}: {this.state.floridaspecialty[p]}</Text> );
+  }
+  map9() {
+    return Object.keys(this.state.floridaspecialtynames).map((p, i) => <Text key={i}>{p}: {this.state.floridaspecialtynames[p]}</Text> );
+  }
+
+  calcFLcounty() {
+    let i = 0;
+    let array = Object.keys(this.state.floridacounty);
+    for (i = 0; i < array.length; i++) {
+      if (array[i] === 'Broward') {
+        break;
+      }
+    }
+    return this.state.floridacounty[array[i]];
+  }
+
+  calcFLspecialty() {
+    let i = 0;
+    let j = 0;
+    //let j = this.props.number - 1;
+    let array = this.state.floridalimits;
+    let array2 = [];
+    // let mo = [];
+
+    // for (i=0; i<6; i++) {
+    //   mo[i] = [];
+    //   for (j=0; j<4; j++) {
+    //     mo[i][j] = i*j;
+    //   }
+    // }
+    
+    mo = Object.keys(array).map(function(k) { return array[k] });
+    
+    // for (i=0; i<2; i++) {
+    //     array2.push(i);
+    // }
+    //mo = Object.keys(array).map(function(v) { return array[v] });
+    // let gi = Object.values(array[1]);
+    // let z = gi.map(x => x*2);
+    let arr = [
+      [1, 2],
+      [3, 4]
+    ]
+//console.log(array.Hund);
+// let mo = this.state.floridalimits;
+
+//      Object.keys(mo).map(el => {
+//        mo.[el].map(sub_el => console.log(sub_el));
+//      })
+    //console.log(z.names[0]);
+    //let zi = mo.length;
+    //console.log(zi);
+    return i;
   }
 
   render() {
@@ -120,8 +205,7 @@ export default class App extends Component<Props> {
             color="#841584"
             accessibilityLabel="Learn more about this purple button"
           />
-          {this.mapFlorida()}
-          
+          <Text>{this.calcFLspecialty()}</Text>
         </ScrollView>
       </View>
     );
